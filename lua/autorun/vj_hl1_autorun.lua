@@ -6,7 +6,7 @@
 --------------------------------------------------*/
 ------------------ Addon Information ------------------
 local PublicAddonName = "Half-Life 1"
-local AddonName = "MP5 Barney SNPC"
+local AddonName = "Brutal Half-Life SNPCs"
 local AddonType = "SNPC"
 local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
