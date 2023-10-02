@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+ 	"$basetexture" "halflife/black"
+	"$envmap" "models/agruntbhl/Chrome2"
+                "$envmapsphere" "1"
+}

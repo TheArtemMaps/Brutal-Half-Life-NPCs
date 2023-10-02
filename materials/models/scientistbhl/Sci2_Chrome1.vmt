@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{ 
+	"$basetexture" "halflife/black"
+	"$envmap" "models/scientistbhl/Sci2_Chrome1"
+                "$envmapsphere" "1"
+}

@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture" "temka/icons/shotgun"
+	"$vertexalpha" "1"
+	"$vertexcolor" "1"
+	"$additive" "1"
+}
