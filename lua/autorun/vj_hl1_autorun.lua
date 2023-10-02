@@ -97,7 +97,7 @@ function BHL:GetVersion()
 end
 
 function BHL:CheckUpdates()
-	http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/updates/main/update.lua", function(contents,size) 
+	http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua", function(contents,size) 
 		local Entry = string.match( contents, "BHL.VERSION%s=%s%d+" )
 
 		if Entry then
@@ -123,7 +123,7 @@ function BHL:CheckUpdates()
 	end)
 end
 
-hook.Add( "InitPostEntity", "checkforupdates", function()
+hook.Add( "InitPostEntity", "!!!bhlcheckupdates", function()
 	timer.Simple(20, function() BHL.CheckUpdates() end)
 end )
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
