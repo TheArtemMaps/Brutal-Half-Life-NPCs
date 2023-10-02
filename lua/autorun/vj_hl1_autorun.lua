@@ -12,7 +12,7 @@ local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
 BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 34
+BHL.VERSION = 31
 BHL.VERSION_GITHUB = 0
 BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
@@ -127,12 +127,11 @@ function BHL:CheckUpdates()
 			if BHL:GetVersion() >= BHL.VERSION_GITHUB then
 				print("[Brutal Half-Life NPCs] is up to date, Version: "..BHL:GetVersion())
 			else
-				print("[Brutal Half-Life NPCs] a newer version is available! Version: "..BHL.VERSION_GITHUB..", You have Version: "..BHL:GetVersion())
-				print("[Brutal Half-Life NPCs] get the latest version at https://github.com/Blu-x92/BHL_base")
+				print("[Brutal Half-Life NPCs] New update is out! Version: "..BHL.VERSION_GITHUB..", You have Version: "..BHL:GetVersion())
 
 				if CLIENT then 
 					timer.Simple(18, function() 
-						chat.AddText( Color( 255, 0, 0 ), "[Brutal Half-Life NPCs] a newer version is available!" )
+						chat.AddText( Color( 255, 0, 0 ), "[Brutal Half-Life NPCs] New update is out! Check it out at the workshop page!" )
 					end)
 				end
 			end
@@ -141,7 +140,7 @@ function BHL:CheckUpdates()
 end
 
 
-hook.Add( "InitPostEntity", "!!!bhlcheckupdates", function()
+hook.Add( "InitPostEntity", "bhlcheckupdates", function()
 	timer.Simple(20, function() BHL.CheckUpdates() end)
 end )
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
