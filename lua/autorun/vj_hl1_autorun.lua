@@ -73,6 +73,7 @@ if CLIENT then
             Panel:AddControl("Label", { Text = "Auto Replace script replaces HL1 NPCs with the Brutal Half-Life NPCs! (Including Barneys and Otis's with weapons)" })
             Panel:AddControl("Checkbox", { Label = "Enable Auto Replacement Script", Command = "vj_bhl_autoreplace_hl1" })
             --Panel:AddControl("Button", { Text = "Check for updates", Command =  BHL.CheckUpdates() }) 
+			Panel:AddControl("Label", { Text = "Checks addon for updates (Prints out info in console, and chat)" })
 			local UpdateButtonPanel = CreateUpdateButton()
             Panel:AddPanel(UpdateButtonPanel)
 		end)
@@ -88,7 +89,7 @@ function CreateUpdateButton()
         UpdateButton:Dock(FILL)
 
         UpdateButton.DoClick = function()
-            BHL.CheckUpdates() -- Предполагая, что BHL.CheckUpdates() - ваша функция проверки обновлений.
+            BHL.CheckUpdates()
         end
 
         return UpdatePanel
