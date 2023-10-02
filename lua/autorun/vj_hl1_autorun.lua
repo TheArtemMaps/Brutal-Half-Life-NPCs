@@ -10,11 +10,11 @@ local AddonName = "MP5 Barney SNPC"
 local AddonType = "SNPC"
 local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
-BHL = istable( BHL ) and BHL or {}
+--BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 3.3
-BHL.VERSION_GITHUB = 0
-BHL.VERSION_TYPE = ".GIT"
+--BHL.VERSION = 3.2
+--BHL.VERSION_GITHUB = 0
+--BHL.VERSION_TYPE = ".WS"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
@@ -72,10 +72,27 @@ if CLIENT then
             --Panel:ControlHelp("Toggle corpse dismemberment by disabling ragdoll on death and keeping static corpse (It's the only way)")
             Panel:AddControl("Label", { Text = "Auto Replace script replaces HL1 NPCs with the Brutal Half-Life NPCs! (Including Barneys and Otis's with weapons)" })
             Panel:AddControl("Checkbox", { Label = "Enable Auto Replacement Script", Command = "vj_bhl_autoreplace_hl1" })
-            Panel:AddControl("Button", { Text = "Check for updates", Command =  BHL.CheckUpdates() }) 
+            --Panel:AddControl("Button", { Text = "Check for updates", Command =  BHL.CheckUpdates() }) 
+			local UpdateButtonPanel = CreateUpdateButton()
+            Panel:AddPanel(UpdateButtonPanel)
 		end)
     end)
 end
+
+function CreateUpdateButton()
+			        local UpdatePanel = vgui.Create("DPanel")
+        UpdatePanel:SetSize(400, 40)
+
+        local UpdateButton = vgui.Create("DButton", UpdatePanel)
+        UpdateButton:SetText("Проверить обновление")
+        UpdateButton:Dock(FILL)
+
+        UpdateButton.DoClick = function()
+            BHL.CheckUpdates() -- Предполагая, что BHL.CheckUpdates() - ваша функция проверки обновлений.
+        end
+
+        return UpdatePanel
+		end
 
 
 -- If enabled during startup, then just run it!
@@ -92,11 +109,11 @@ cvars.AddChangeCallback("vj_bhl_autoreplace_hl1", function(convar_name, value_ol
 	end
 end)
 
-function BHL:GetVersion()
-	return BHL.VERSION
-end
+--function BHL:GetVersion()
+	--return BHL.VERSION
+--end
 
-function BHL:CheckUpdates()
+--[[function BHL:CheckUpdates()
 	http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua", function(contents,size) 
 		local Entry = string.match( contents, "BHL.VERSION%s=%s%d+" )
 
@@ -121,7 +138,37 @@ function BHL:CheckUpdates()
 			end
 		end
 	end)
+end--]]
+
+local addonInfo = {
+    addonName = "Brutal Half-Life NPCs",
+    currentVersion = "3.1",
+    updateURL = "https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua",
+}
+
+
+function BHL:CheckUpdates()
+    http.Fetch(addonInfo.updateURL, 
+        function(body, size, headers, code)
+            if code == 200 then
+                local updateInfo = util.JSONToTable(body)
+                if updateInfo and updateInfo.version and updateInfo.version > addonInfo.currentVersion then
+                    chat.AddText(Color(255, 0, 0), "Update available for " .. addonInfo.addonName .. "!")
+                    chat.AddText("New version: " .. updateInfo.version)
+                    chat.AddText("Update details: " .. updateInfo.description)
+                else
+                    chat.AddText("No updates available for " .. addonInfo.addonName)
+                end
+            else
+                chat.AddText(Color(255, 0, 0), "Error checking for updates: HTTP request failed")
+            end
+        end,
+        function(errorMsg)
+            chat.AddText(Color(255, 0, 0), "Error checking for updates: " .. errorMsg)
+        end
+    )
 end
+
 
 hook.Add( "InitPostEntity", "!!!bhlcheckupdates", function()
 	timer.Simple(20, function() BHL.CheckUpdates() end)
