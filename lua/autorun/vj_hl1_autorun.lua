@@ -10,11 +10,11 @@ local AddonName = "MP5 Barney SNPC"
 local AddonType = "SNPC"
 local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
---BHL = istable( BHL ) and BHL or {}
+BHL = istable( BHL ) and BHL or {}
 
---BHL.VERSION = 3.2
---BHL.VERSION_GITHUB = 0
---BHL.VERSION_TYPE = ".WS"
+BHL.VERSION = 3.3
+BHL.VERSION_GITHUB = 0
+BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
@@ -109,11 +109,11 @@ cvars.AddChangeCallback("vj_bhl_autoreplace_hl1", function(convar_name, value_ol
 	end
 end)
 
---function BHL:GetVersion()
-	--return BHL.VERSION
---end
+function BHL:GetVersion()
+	return BHL.VERSION
+end
 
---[[function BHL:CheckUpdates()
+function BHL:CheckUpdates()
 	http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua", function(contents,size) 
 		local Entry = string.match( contents, "BHL.VERSION%s=%s%d+" )
 
@@ -138,16 +138,16 @@ end)
 			end
 		end
 	end)
-end--]]
+end
 
-local addonInfo = {
+--[[local addonInfo = {
     addonName = "Brutal Half-Life NPCs",
-    currentVersion = "3.1",
+    currentVersion = "3.0",
     updateURL = "https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua",
-}
+}--]]
 
 
-function BHL:CheckUpdates()
+--[[function BHL:CheckUpdates()
     http.Fetch(addonInfo.updateURL, 
         function(body, size, headers, code)
             if code == 200 then
@@ -167,7 +167,7 @@ function BHL:CheckUpdates()
             chat.AddText(Color(255, 0, 0), "Error checking for updates: " .. errorMsg)
         end
     )
-end
+end--]]
 
 
 hook.Add( "InitPostEntity", "!!!bhlcheckupdates", function()
