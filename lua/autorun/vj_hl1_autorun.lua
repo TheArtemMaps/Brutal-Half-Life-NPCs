@@ -12,7 +12,7 @@ local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
 BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 3.3
+BHL.VERSION = 32
 BHL.VERSION_GITHUB = 0
 BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
@@ -84,7 +84,7 @@ function CreateUpdateButton()
         UpdatePanel:SetSize(400, 40)
 
         local UpdateButton = vgui.Create("DButton", UpdatePanel)
-        UpdateButton:SetText("Проверить обновление")
+        UpdateButton:SetText("Check for updates")
         UpdateButton:Dock(FILL)
 
         UpdateButton.DoClick = function()
@@ -139,35 +139,6 @@ function BHL:CheckUpdates()
 		end
 	end)
 end
-
---[[local addonInfo = {
-    addonName = "Brutal Half-Life NPCs",
-    currentVersion = "3.0",
-    updateURL = "https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua",
-}--]]
-
-
---[[function BHL:CheckUpdates()
-    http.Fetch(addonInfo.updateURL, 
-        function(body, size, headers, code)
-            if code == 200 then
-                local updateInfo = util.JSONToTable(body)
-                if updateInfo and updateInfo.version and updateInfo.version > addonInfo.currentVersion then
-                    chat.AddText(Color(255, 0, 0), "Update available for " .. addonInfo.addonName .. "!")
-                    chat.AddText("New version: " .. updateInfo.version)
-                    chat.AddText("Update details: " .. updateInfo.description)
-                else
-                    chat.AddText("No updates available for " .. addonInfo.addonName)
-                end
-            else
-                chat.AddText(Color(255, 0, 0), "Error checking for updates: HTTP request failed")
-            end
-        end,
-        function(errorMsg)
-            chat.AddText(Color(255, 0, 0), "Error checking for updates: " .. errorMsg)
-        end
-    )
-end--]]
 
 
 hook.Add( "InitPostEntity", "!!!bhlcheckupdates", function()
