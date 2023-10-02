@@ -12,9 +12,9 @@ local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
 BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 3.1
+BHL.VERSION = 3.3
 BHL.VERSION_GITHUB = 0
-BHL.VERSION_TYPE = ".WS"
+BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
