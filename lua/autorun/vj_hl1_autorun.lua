@@ -12,7 +12,7 @@ local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
 BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 31
+BHL.VERSION = 32
 BHL.VERSION_GITHUB = 0
 BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
@@ -73,7 +73,7 @@ if CLIENT then
             Panel:AddControl("Label", { Text = "Auto Replace script replaces HL1 NPCs with the Brutal Half-Life NPCs! (Including Barneys and Otis's with weapons)" })
             Panel:AddControl("Checkbox", { Label = "Enable Auto Replacement Script", Command = "vj_bhl_autoreplace_hl1" })
             --Panel:AddControl("Button", { Text = "Check for updates", Command =  BHL.CheckUpdates() }) 
-			Panel:AddControl("Label", { Text = "Checks addon for updates (Prints out info in console, and chat)" })
+			Panel:AddControl("Label", { Text = "Checks addon for updates (Prints out info in chat)" })
 			local UpdateButtonPanel = CreateUpdateButton()
             Panel:AddPanel(UpdateButtonPanel)
 		end)
@@ -115,30 +115,33 @@ function BHL:GetVersion()
 end
 
 function BHL:CheckUpdates()
-	http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua", function(contents,size) 
-		local Entry = string.match( contents, "BHL.VERSION%s=%s%d+" )
+    http.Fetch("https://raw.githubusercontent.com/TheArtemMaps/Brutal-Half-Life-NPCs/main/lua/autorun/vj_hl1_autorun.lua", function(contents, size)
+        local Entry = string.match(contents, "BHL.VERSION%s=%s%d+")
 
-		if Entry then
-			BHL.VERSION_GITHUB = tonumber( string.match( Entry , "%d+" ) ) or 0
-		end
+        if Entry then
+            BHL.VERSION_GITHUB = tonumber(string.match(Entry, "%d+")) or 0
+        end
 
-		if BHL.VERSION_GITHUB == 0 then
-			print("[Brutal Half-Life NPCs] latest version could not be detected, You have Version: "..BHL:GetVersion())
-		else
-			if BHL:GetVersion() >= BHL.VERSION_GITHUB then
-				print("[Brutal Half-Life NPCs] is up to date, Version: "..BHL:GetVersion())
-			else
-				print("[Brutal Half-Life NPCs] New update is out! Version: "..BHL.VERSION_GITHUB..", You have Version: "..BHL:GetVersion())
+        if CLIENT then
+            if BHL.VERSION_GITHUB == 0 then
+                chat.AddText("[Brutal Half-Life NPCs] Latest version could not be detected, You have Version: " .. BHL:GetVersion())
+            else
+                if BHL:GetVersion() >= BHL.VERSION_GITHUB then
+                    chat.AddText(Color(0, 128, 0), "[Brutal Half-Life NPCs] is up to date, Version: " .. BHL:GetVersion())
+                else
+                    chat.AddText(Color(255, 0, 0), "[Brutal Half-Life NPCs] New update is out! Version: " .. BHL.VERSION_GITHUB .. ", You have Version: " .. BHL:GetVersion())
 
-				if CLIENT then 
-					timer.Simple(18, function() 
-						chat.AddText( Color( 255, 0, 0 ), "[Brutal Half-Life NPCs] New update is out! Check it out at the workshop page!" )
-					end)
-				end
-			end
-		end
-	end)
+                    if CLIENT then
+                        timer.Simple(18, function()
+                            chat.AddText(Color(255, 0, 0), "[Brutal Half-Life NPCs] New update is out! Check it out at the workshop page!")
+                        end)
+                    end
+                end
+            end
+        end
+    end)
 end
+
 
 
 hook.Add( "InitPostEntity", "bhlcheckupdates", function()
