@@ -12,7 +12,7 @@ local AutorunFile = "autorun/vj_hl1_autorun.lua"
 -------------------------------------------------------
 BHL = istable( BHL ) and BHL or {}
 
-BHL.VERSION = 49
+BHL.VERSION = 50
 BHL.VERSION_GITHUB = 0
 BHL.VERSION_TYPE = ".GIT"
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
